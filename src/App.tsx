@@ -1,5 +1,12 @@
+import { requests } from "./requests";
+import { Row } from "./components/Row";
+
 function App() {
-  return <>テスト</>;
+  return (
+    <div className="App">
+      <Row fetchUrl={requests.fetchNetflixOriginals} />
+    </div>
+  );
 }
 
 export default App;

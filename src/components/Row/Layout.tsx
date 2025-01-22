@@ -1,4 +1,4 @@
-import { Movie } from "./useProps.ts";
+import { Movie } from "../../types";
 
 type LayoutProps = {
   title: string;
@@ -9,7 +9,7 @@ type LayoutProps = {
 export const Layout = ({ title, movies, isLargeRow }: LayoutProps) => {
   const image_url = "https://image.tmdb.org/t/p/original";
   return (
-    <div className="ml-5 text-white">
+    <div className="mt-2 ml-5  text-white">
       <h2>{title}</h2>
       <div className="flex overflow-y-hidden overflow-x-scroll p-5 scrollbar-hide">
         {movies.map((movie) => (

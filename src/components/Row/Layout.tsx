@@ -1,15 +1,47 @@
-import { Movie } from "../../types";
+import { Movie } from "../../types.ts";
+import YouTube from "react-youtube";
 
-type LayoutProps = {
+export type Props = {
   title: string;
-  movies: Movie[];
+  fetchUrl: string;
   isLargeRow?: boolean;
 };
 
-export const Layout = ({ title, movies, isLargeRow }: LayoutProps) => {
+type LayoutProps = {
+  title: string;
+  isLargeRow?: boolean;
+  movies: Movie[]; // 追加
+  trailerUrl: string | null;
+  handleClick: (movie: Movie) => void;
+};
+
+// 追加
+type Options = {
+  height: string;
+  width: string;
+  playerVars: {
+    autoplay: 0 | 1 | undefined;
+  };
+};
+
+export const Layout = ({
+  title,
+  movies,
+  isLargeRow,
+  handleClick,
+  trailerUrl,
+}: LayoutProps) => {
   const image_url = "https://image.tmdb.org/t/p/original";
+  const opts: Options = {
+    height: "390",
+    width: "640",
+    playerVars: {
+      autoplay: 1,
+    },
+  };
+
   return (
-    <div className="mt-2 ml-5  text-white">
+    <div className="ml-5 text-white">
       <h2>{title}</h2>
       <div className="flex overflow-y-hidden overflow-x-scroll p-5 scrollbar-hide">
         {movies.map((movie) => (
@@ -21,10 +53,13 @@ export const Layout = ({ title, movies, isLargeRow }: LayoutProps) => {
             src={`${image_url}${
               isLargeRow ? movie.poster_path : movie.backdrop_path
             }`}
+            onClick={() => handleClick(movie)}
             alt={movie.name}
           />
         ))}
       </div>
+
+      {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
     </div>
   );
 };
